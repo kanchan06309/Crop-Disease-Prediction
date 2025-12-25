@@ -13,6 +13,7 @@ import os
 from mysql.connector import Error
 from datetime import datetime
 from dotenv import load_dotenv
+from urllib.parse import urlparse
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for frontend requests
@@ -584,13 +585,31 @@ def search():
         traceback.print_exc()
         return jsonify({'error': str(e)}), 500
 
-# Database configuration from environment variables
-DB_CONFIG = {
-    'host': os.getenv('DB_HOST', 'localhost'),
-    'user': os.getenv('DB_USER', 'root'),
-    'password': os.getenv('DB_PASSWORD', 'Enter your password here'),
-    'database': os.getenv('DB_NAME', 'crop_disease_db')
-}
+# --- NEW CONFIGURATION LOGIC ---
+db_url = os.getenv('DATABASE_URL')
+
+# Check if we are on Render (Cloud) or Local (Laptop)
+if db_url:
+    # We are on Render! Parse the long Aiven URL
+    url = urlparse(db_url)
+    DB_CONFIG = {
+        'host': url.hostname,
+        'user': url.username,
+        'password': url.password,
+        'database': url.path[1:],  # Removes the leading '/'
+        'port': url.port or 3306
+    }
+else:
+    # We are on your Laptop! Use your old local settings
+    DB_CONFIG = {
+        'host': os.getenv('DB_HOST', 'localhost'),
+        'user': os.getenv('DB_USER', 'root'),
+        'password': os.getenv('DB_PASSWORD', 'kanmysql'),
+        'database': os.getenv('DB_NAME', 'crop_disease_db')
+    }
+
+print("Database Configured for:", DB_CONFIG['host'])
+
 
 print("done")
 
