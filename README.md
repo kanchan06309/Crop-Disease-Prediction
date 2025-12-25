@@ -61,6 +61,7 @@ Database name - crop_disease_db
 Tables - disease, treatment, and crops
 
 -- Table 1: crops
+
 CREATE TABLE crops (
     crop_id INT PRIMARY KEY AUTO_INCREMENT,
     crop_name VARCHAR(100) NOT NULL,
@@ -70,6 +71,7 @@ CREATE TABLE crops (
 );
 
 -- Table 2: treatment
+
 CREATE TABLE treatment (
     treatment_id INT PRIMARY KEY AUTO_INCREMENT,
     treatment_name VARCHAR(150) NOT NULL,
@@ -80,6 +82,7 @@ CREATE TABLE treatment (
 );
 
 -- Table 3: disease (with foreign keys to crops and treatment)
+
 CREATE TABLE disease (
     disease_id INT PRIMARY KEY AUTO_INCREMENT,
     disease_name VARCHAR(150) NOT NULL,
