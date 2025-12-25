@@ -1,0 +1,13 @@
+python
+flask
+flask_cors
+tenserflow
+pandas
+numpy
+io
+json
+os
+mysql.connector
+PIL
+requests
+datetime
