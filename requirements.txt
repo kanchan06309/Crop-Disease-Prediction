@@ -6,3 +6,4 @@ numpy
 mysql-connector-python
 Pillow
 requests
+gunicorn
