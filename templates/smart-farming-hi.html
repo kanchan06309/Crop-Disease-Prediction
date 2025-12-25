@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="hi">
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>स्मार्ट खेती - SustainaCrop</title>
+    <link rel="stylesheet" href="../static/style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div id="app">
+        <header class="header">
+            <div class="logo-container">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M20 0C8.954 0 0 8.954 0 20s8.954 20 20 20 20-8.954 20-20S31.046 0 20 0zm0 36c-8.837 0-16-7.163-16-16S11.163 4 20 4s16 7.163 16 16-7.163 16-16 16z"
+                        fill="#10B981" />
+                    <path d="M20 10c-5.523 0-10 4.477-10 10h20c0-5.523-4.477-10-10-10z" fill="#10B981" />
+                    <path d="M20 30c2.761 0 5-2.239 5-5H15c0 2.761 2.239 5 5 5z" fill="#059669" />
+                </svg>
+                <span class="logo-text">AgroAI</span>
+            </div>
+            <nav class="main-nav">
+                <a href="{{ url_for('homehi') }}" class="nav-btn active">होम</a>
+                <a href="{{ url_for('explorehi') }}" class="nav-btn">एक्सप्लोर करें</a>
+                <a href="{{ url_for('detect') }}" class="nav-btn">रोग का पता लगाएं</a>
+                <a href="{{ url_for('contacthi') }}" class="nav-btn">संपर्क करें</a>
+                <a href="{{ url_for('helphi') }}" class="nav-btn">सहायता/FAQ</a>
+                <a href="{{ url_for('dashboard') }}" class="nav-btn">डैशबोर्ड</a>
+                <a href="{{ url_for('home') }}" class="nav-btn">English</a>
+            </nav>
+        </header>
+
+        <main class="page-container">
+            <h1>स्मार्ट <span class="gradient-text">खेती</span></h1>
+            <p class="subtitle">प्रौद्योगिकी और डेटा के साथ कृषि में क्रांति ला रहा है।</p>
+
+            <div class="section-container" style="max-width: 800px; margin: 0 auto; color: #cbd5e1; line-height: 1.8;">
+                <img src="https://images.pexels.com/photos/974314/pexels-photo-974314.jpeg?_gl=1*sb7ntx*_ga*NDQ4MjUxMTYyLjE3MzE2NzExODE.*_ga_8JE65Q40S6*czE3NjU2Mjk0MjgkbzUkZzEkdDE3NjU2Mjk0NDIkajQ2JGwwJGgw                    alt="
+                    Smart Farming Drone"
+                    style="width: 100%; border-radius: 20px; margin-bottom: 2rem; border: 1px solid rgba(255,255,255,0.1);">
+
+                <h3 style="color: var(--color-primary); font-size: 1.5rem; margin-bottom: 1rem;">IoT क्रांति</h3>
+                <p style="margin-bottom: 2rem;">
+                    स्मार्ट खेती वास्तविक समय में फसल स्वास्थ्य, मिट्टी की नमी और मौसम की स्थिति की निगरानी के लिए
+                    इंटरनेट ऑफ थिंग्स (IoT) सेंसर, ड्रोन और स्वचालित प्रणालियों का उपयोग करती है।
+                    खेत के हर कोने से सटीक डेटा पॉइंट एकत्र करके, किसान पानी, उर्वरक और कीटनाशकों की सटीक आवश्यकताओं को
+                    समझ सकते हैं।
+                </p>
+
+                <h3 style="color: var(--color-primary); font-size: 1.5rem; margin-bottom: 1rem;">परिशुद्ध कृषि
+                    (Precision Agriculture)</h3>
+                <p style="margin-bottom: 2rem;">
+                    पूरे खेतों का समान रूप से इलाज करने के बजाय, परिशुद्ध कृषि लक्षित हस्तक्षेप की अनुमति देती है।
+                    यदि भूमि का एक छोटा टुकड़ा पोषक तत्वों की कमी वाला है, तो केवल उस विशिष्ट क्षेत्र को उपचार मिलता है।
+                    यह रासायनिक उपयोग को काफी कम करता है, लागत कम करता है, और पर्यावरणीय अपवाह को कम करता है।
+                </p>
+
+                <h3 style="color: var(--color-primary); font-size: 1.5rem; margin-bottom: 1rem;">स्वचालित सिस्टम</h3>
+                <p>
+                    स्वायत्त ट्रैक्टरों से लेकर रोबोटिक हार्वेस्टर तक, स्वचालन श्रम की कमी को दूर कर रहा है और दक्षता
+                    बढ़ा रहा है।
+                    हमारे एआई-संचालित भविष्यवाणी मॉडल इन प्रणालियों के साथ मूल रूप से एकीकृत होते हैं ताकि यह सुनिश्चित
+                    किया जा सके कि हस्तक्षेप बिल्कुल तब हो जब आवश्यकता हो,
+                    उपज और गुणवत्ता को अनुकूलित करना।
+                </p>
+            </div>
+        </main>
+    </div>
+    <script type="module" src="/main.js"></script>
+</body>
+
+</html>

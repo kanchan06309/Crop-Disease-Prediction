@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="hi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>खोजें | SustainaCrop</title>
+    <link rel="stylesheet" href="../static/exstyle.css" />
+    <script src="../static/explore.js" defer></script>
+</head>
+
+<body>
+
+    <header class="sc-header">
+        <div class="sc-header-inner">
+            <div class="sc-logo">
+                <div class="sc-logo-icon">◎</div>
+                <span class="sc-logo-text">AgroAI</span>
+            </div>
+            <a href="/hi" class="home-btn">मुख्य पृष्ठ पर जाएं</a>
+        </div>
+    </header>
+
+    <main class="sc-main">
+        <section class="explore-hero">
+            <div class="explore-hero-left">
+                <p class="eyebrow">संसाधनों की खोज करें</p>
+                <h1>
+                    पाएँ स्मार्ट <span class="accent">फसल जानकारी</span>
+                </h1>
+                <p class="subtitle">
+                    बीमारियों की खोज करें, उपचार जानें, और अपने खेतों के लिए आधुनिक
+                    एआई-आधारित खेती के तरीकों को सीखें।
+                </p>
+
+                <div class="search-wrapper">
+                    <div class="input-group">
+                        <input type="text" id="search-input" placeholder="खोजें (जैसे, 'चावल', 'झुलसा रोग')..."
+                            autocomplete="off" />
+                        <select id="filter-crop">
+                            <option value="">सभी फसलें</option>
+                        </select>
+                    </div>
+                    <p id="results-count" style="margin-top: 10px; font-size: 0.9rem; opacity: 0.8;">
+                        इनपुट की प्रतीक्षा हो रही है...
+                    </p>
+                    v>
+                </div>
+
+                <div class="explore-hero-right">
+                    <div class="scan-card">
+                        <div class="scan-line"></div>
+                        <div class="scan-info">
+                            <span>डेटाबेस: सक्रिय</span>
+                            <span>एआई: चालू</span>
+                        </div>
+                    </div>
+                </div>
+        </section>
+
+        <section class="explore-grid-section">
+            <h2 class="grid-title">खोज परिणाम</h2>
+
+            <div id="loading-spinner" style="display: none; text-align: center; padding: 20px;">
+                <div class="spinner">लोड हो रहा है...</div>
+            </div>
+
+            <div id="error-message" style="display: none; color: #ff6b6b; text-align: center; margin-bottom: 20px;">
+            </div>
+
+            <div id="disease-container" class="explore-grid">
+                <!-- खोज परिणाम यहाँ दिखाई देंगे -->
+            </div>
+        </section>
+    </main>
+</body>
+
+</html>

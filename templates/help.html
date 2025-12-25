@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Help & FAQ - SustainaCrop</title>
+    <link rel="stylesheet" href="../static/style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div id="app">
+        <header class="header">
+            <div class="logo-container">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M20 0C8.954 0 0 8.954 0 20s8.954 20 20 20 20-8.954 20-20S31.046 0 20 0zm0 36c-8.837 0-16-7.163-16-16S11.163 4 20 4s16 7.163 16 16-7.163 16-16 16z"
+                        fill="#10B981" />
+                    <path d="M20 10c-5.523 0-10 4.477-10 10h20c0-5.523-4.477-10-10-10z" fill="#10B981" />
+                    <path d="M20 30c2.761 0 5-2.239 5-5H15c0 2.761 2.239 5 5 5z" fill="#059669" />
+                </svg>
+                <span class="logo-text">AgroAI</span>
+            </div>
+            <nav class="main-nav">
+                <a href="{{ url_for('home') }}" class="nav-btn">Home</a>
+                <a href="{{ url_for('explore') }}" class="nav-btn">Explore</a>
+                <a href="{{ url_for('detect') }}" class="nav-btn">Disease Detection</a>
+                <a href="{{ url_for('contact') }}" class="nav-btn">Contact</a>
+                <a href="{{ url_for('help') }}" class="nav-btn">Help/FAQ</a>
+                <a href="{{ url_for('dashboard') }}" class="nav-btn">Dashboard</a>
+                <a href="{{ url_for('homehi') }}" class="nav-btn">हिंदी</a>
+            </nav>
+        </header>
+
+        <main class="page-container">
+            <h1>Frequently Asked <span class="gradient-text">Questions</span></h1>
+
+            <div class="faq-container">
+                <details class="faq-item">
+                    <summary>How does the AI detection work?</summary>
+                    <p>Our system uses advanced computer vision algorithms trained on thousands of plant images to
+                        identify disease patterns with high accuracy.</p>
+                </details>
+
+                <details class="faq-item">
+                    <summary>Is this service free to use?</summary>
+                    <p>Yes, the basic disease detection features are completely free for farmers. Premium features are
+                        available for large-scale enterprise use.</p>
+                </details>
+
+                <details class="faq-item">
+                    <summary>Which crops are supported?</summary>
+                    <p>Currently, we support major crops including Wheat, Rice, Corn, Potato, and Tomato. We are
+                        constantly adding more.</p>
+                </details>
+
+                <details class="faq-item">
+                    <summary>How do I contact support?</summary>
+                    <p>You can use the 'Contact Support' option in the menu or email us directly at
+                        support@sustainacrop.ai.</p>
+                </details>
+            </div>
+        </main>
+    </div>
+    <script type="module" src="/main.js"></script>
+</body>
+
+</html>

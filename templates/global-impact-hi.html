@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="hi">
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>वैश्विक प्रभाव - SustainaCrop</title>
+    <link rel="stylesheet" href="../static/style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div id="app">
+        <header class="header">
+            <div class="logo-container">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M20 0C8.954 0 0 8.954 0 20s8.954 20 20 20 20-8.954 20-20S31.046 0 20 0zm0 36c-8.837 0-16-7.163-16-16S11.163 4 20 4s16 7.163 16 16-7.163 16-16 16z"
+                        fill="#10B981" />
+                    <path d="M20 10c-5.523 0-10 4.477-10 10h20c0-5.523-4.477-10-10-10z" fill="#10B981" />
+                    <path d="M20 30c2.761 0 5-2.239 5-5H15c0 2.761 2.239 5 5 5z" fill="#059669" />
+                </svg>
+                <span class="logo-text">AgroAI</span>
+            </div>
+            <nav class="main-nav">
+                <a href="{{ url_for('homehi') }}" class="nav-btn active">होम</a>
+                <a href="{{ url_for('explorehi') }}" class="nav-btn">एक्सप्लोर करें</a>
+                <a href="{{ url_for('detect') }}" class="nav-btn">रोग का पता लगाएं</a>
+                <a href="{{ url_for('contacthi') }}" class="nav-btn">संपर्क करें</a>
+                <a href="{{ url_for('helphi') }}" class="nav-btn">सहायता/FAQ</a>
+                <a href="{{ url_for('dashboard') }}" class="nav-btn">डैशबोर्ड</a>
+                <a href="{{ url_for('home') }}" class="nav-btn">English</a>
+            </nav>
+        </header>
+
+        <main class="page-container">
+            <h1>वैश्विक <span class="gradient-text">प्रभाव</span></h1>
+            <p class="subtitle">बेहतर भविष्य के लिए टिकाऊ कृषि।</p>
+
+            <div class="section-container" style="max-width: 800px; margin: 0 auto; color: #cbd5e1; line-height: 1.8;">
+                <img src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?q=80&w=2070&auto=format&fit=crop"
+                    alt="Global Agriculture"
+                    style="width: 100%; border-radius: 20px; margin-bottom: 2rem; border: 1px solid rgba(255,255,255,0.1);">
+
+                <h3 style="color: var(--color-primary); font-size: 1.5rem; margin-bottom: 1rem;">खाद्य सुरक्षा</h3>
+                <p style="margin-bottom: 2rem;">
+                    2050 तक वैश्विक जनसंख्या 9.7 अरब तक पहुंचने का अनुमान है, इसलिए कृषि उत्पादन में 70% की वृद्धि की
+                    आवश्यकता है।
+                    हमारे ग्रह के संसाधनों को कम किए बिना इस मांग को पूरा करने के लिए टिकाऊ कृषि महत्वपूर्ण है।
+                    सटीक रोग पहचान के माध्यम से फसल की विफलता को रोककर, हम सीधे वैश्विक खाद्य सुरक्षा में योगदान करते
+                    हैं।
+                </p>
+
+                <h3 style="color: var(--color-primary); font-size: 1.5rem; margin-bottom: 1rem;">पर्यावरण संरक्षण</h3>
+                <p style="margin-bottom: 2rem;">
+                    पारंपरिक खेती ग्रीनहाउस गैस उत्सर्जन और जल प्रदूषण में एक महत्वपूर्ण योगदानकर्ता है।
+                    स्मार्ट खेती प्रथाएं संसाधनों के उपयोग का अनुकूलन करती हैं, जिससे अतिरिक्त पानी और उर्वरकों की
+                    आवश्यकता कम हो जाती है।
+                    यह भोजन उत्पादन के कार्बन पदचिह्न को कम करने में मदद करता है और स्थानीय पारिस्थितिक तंत्र को
+                    रासायनिक अपवाह से बचाता है।
+                </p>
+
+                <h3 style="color: var(--color-primary); font-size: 1.5rem; margin-bottom: 1rem;">आर्थिक स्थिरता</h3>
+                <p>
+                    व्यापक रूप से अपनाने के लिए, स्थिरता को आर्थिक रूप से भी व्यवहार्य होना चाहिए।
+                    लागत को कम करके और फसलों को निवारणीय रोगों से बचाकर, हम छोटे और बड़े खेतों की लाभप्रदता में सुधार
+                    करते हैं।
+                    यह आर्थिक स्थिरता ग्रामीण समुदायों को मजबूत करती है और यह सुनिश्चित करती है कि खेती आने वाली
+                    पीढ़ियों के लिए एक व्यवहार्य आजीविका बनी रहे।
+                </p>
+            </div>
+        </main>
+    </div>
+    <script type="module" src="/main.js"></script>
+</body>
+
+</html>

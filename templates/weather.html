@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agricultural Dashboard - Madhya Pradesh</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .dashboard-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Header Section */
+        .dashboard-header {
+            background: white;
+            border-radius: 15px;
+            padding: 25px 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .dashboard-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .dashboard-title h1 {
+            font-size: 28px;
+            color: #333;
+            margin: 0;
+        }
+
+        .dashboard-title .icon {
+            font-size: 36px;
+        }
+
+        /* Container for right-side controls (Selector + Back Button) */
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .city-selector-container {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .city-selector-container label {
+            font-weight: 600;
+            color: #666;
+        }
+
+        .city-selector-container select {
+            padding: 10px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            outline: none;
+            transition: border 0.3s;
+        }
+
+        .city-selector-container select:focus {
+            border-color: #667eea;
+        }
+
+        .fetch-btn {
+            padding: 10px 25px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .fetch-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* New Back Button Style */
+        .back-btn {
+            padding: 10px 25px;
+            background: transparent;
+            border: 2px solid #667eea;
+            color: #667eea;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Main Grid Layout */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        /* Card Styles */
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .card-header h2 {
+            font-size: 22px;
+            color: #333;
+        }
+
+        .card-icon {
+            font-size: 28px;
+        }
+
+        /* Weather Card */
+        .weather-main {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .weather-icon {
+            font-size: 80px;
+            margin-bottom: 10px;
+        }
+
+        .temperature {
+            font-size: 48px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .description {
+            font-size: 18px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .weather-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .detail-item {
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 8px;
+        }
+
+        .detail-label {
+            font-size: 12px;
+            color: #666;
+            text-transform: uppercase;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .detail-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        /* Advisory Cards */
+        .advisory-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .advisory-status.not-recommended {
+            background: #fee;
+            color: #c33;
+        }
+
+        .advisory-status.caution {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .advisory-status.recommended {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .advisory-status.reduce {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .advisory-status.increase {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .advisory-recommendation {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .advisory-reasons {
+            list-style: none;
+            padding: 0;
+        }
+
+        .advisory-reasons li {
+            padding: 8px 0 8px 25px;
+            position: relative;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .advisory-reasons li:before {
+            content: "•";
+            position: absolute;
+            left: 10px;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .advisory-data {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        .advisory-data-item {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .advisory-data-label {
+            color: #666;
+            font-size: 11px;
+            text-transform: uppercase;
+            font-weight: 600;
+            display: block;
+        }
+
+        .advisory-data-value {
+            color: #333;
+            font-weight: 700;
+            margin-top: 3px;
+        }
+
+        .optimal-time {
+            background: #e7f3ff;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-size: 14px;
+            color: #0066cc;
+        }
+
+        .optimal-time strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* Loading and Error States */
+        .loading, .error, .initial-message {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        .error {
+            color: #c33;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .header-controls {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .city-selector-container {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .back-btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .weather-details, .advisory-data {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="dashboard-header">
+            <div class="dashboard-title">
+                <span class="icon">🌾</span>
+                <h1>Agricultural Dashboard - Madhya Pradesh</h1>
+            </div>
+            
+            <div class="header-controls">
+                <div class="city-selector-container">
+                    <label for="citySelect">Select City:</label>
+                    <select id="citySelect">
+                        <option value="">Choose a city...</option>
+                    </select>
+                    <button class="fetch-btn" onclick="fetchDashboardData()">Get Data</button>
+                </div>
+
+                <button class="back-btn" onclick="window.location.href='/dashboard'">
+                     Back to Dashboard
+                </button>
+            </div>
+        </div>
+
+        <div id="initialMessage" class="card">
+            <div class="initial-message">
+                <p style="font-size: 18px;">🌾 Select a city and click "Get Data" to view weather conditions and agricultural advisories.</p>
+            </div>
+        </div>
+
+        <div id="loadingMessage" class="card hidden">
+            <div class="loading">
+                <p style="font-size: 18px;">⏳ Loading dashboard data...</p>
+            </div>
+        </div>
+
+        <div id="errorMessage" class="card error hidden">
+            <p></p>
+        </div>
+
+        <div id="dashboardContent" class="hidden">
+            <div class="dashboard-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-icon">🌦️</span>
+                        <h2>Current Weather</h2>
+                    </div>
+                    <div class="weather-main">
+                        <div class="weather-icon" id="weatherIcon">☀️</div>
+                        <div class="temperature" id="temperature">--°C</div>
+                        <div class="description" id="description">--</div>
+                    </div>
+                    <div class="weather-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Feels Like</span>
+                            <span class="detail-value" id="feelsLike">--°C</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Humidity</span>
+                            <span class="detail-value" id="humidity">--%</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Wind Speed</span>
+                            <span class="detail-value" id="windSpeed">-- km/h</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Pressure</span>
+                            <span class="detail-value" id="pressure">-- hPa</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Visibility</span>
+                            <span class="detail-value" id="visibility">-- km</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Cloud Cover</span>
+                            <span class="detail-value" id="clouds">--%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-icon">💧</span>
+                        <h2>Irrigation Advisory</h2>
+                    </div>
+                    <div id="irrigationAdvisory">
+                        <div class="advisory-status" id="irrigationStatus">
+                            <span id="irrigationStatusText">--</span>
+                        </div>
+                        <div class="advisory-recommendation" id="irrigationRecommendation">--</div>
+                        <ul class="advisory-reasons" id="irrigationReasons"></ul>
+                        <div class="advisory-data" id="irrigationData"></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-icon">💊</span>
+                        <h2>Spray Advisory</h2>
+                    </div>
+                    <div id="sprayAdvisory">
+                        <div class="advisory-status" id="sprayStatus">
+                            <span id="sprayStatusText">--</span>
+                        </div>
+                        <div class="advisory-recommendation" id="sprayRecommendation">--</div>
+                        <ul class="advisory-reasons" id="sprayReasons"></ul>
+                        <div class="optimal-time" id="sprayOptimalTime">
+                            <strong>⏰ Optimal Spraying Time:</strong>
+                            <span id="optimalTimeText">--</span>
+                        </div>
+                        <div class="advisory-data" id="sprayData"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE_URL = 'http://localhost:8000/api';
+
+        const weatherIcons = {
+            '01d': '☀️', '01n': '🌙',
+            '02d': '⛅', '02n': '☁️',
+            '03d': '☁️', '03n': '☁️',
+            '04d': '☁️', '04n': '☁️',
+            '09d': '🌧️', '09n': '🌧️',
+            '10d': '🌦️', '10n': '🌧️',
+            '11d': '⛈️', '11n': '⛈️',
+            '13d': '❄️', '13n': '❄️',
+            '50d': '🌫️', '50n': '🌫️'
+        };
+
+        // Load cities on page load
+        window.addEventListener('DOMContentLoaded', loadCities);
+
+        async function loadCities() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/cities`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    const select = document.getElementById('citySelect');
+                    data.cities.forEach(city => {
+                        const option = document.createElement('option');
+                        option.value = city;
+                        option.textContent = city;
+                        select.appendChild(option);
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading cities:', error);
+            }
+        }
+
+        async function fetchDashboardData() {
+            const city = document.getElementById('citySelect').value;
+            
+            if (!city) {
+                alert('Please select a city first!');
+                return;
+            }
+
+            showElement('loadingMessage');
+            hideElement('initialMessage');
+            hideElement('errorMessage');
+            hideElement('dashboardContent');
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/dashboard/${city}`);
+                const data = await response.json();
+
+                if (data.success) {
+                    displayDashboard(data);
+                } else {
+                    showError(data.error || 'Failed to fetch dashboard data');
+                }
+            } catch (error) {
+                showError('Network error. Please ensure the backend server is running on port 5000.');
+            }
+        }
+
+        function displayDashboard(data) {
+            // Display Weather
+            displayWeather(data.weather);
+            
+            // Display Irrigation Advisory
+            displayIrrigationAdvisory(data.irrigation_advisory);
+            
+            // Display Spray Advisory
+            displaySprayAdvisory(data.spray_advisory);
+
+            hideElement('loadingMessage');
+            showElement('dashboardContent');
+        }
+
+        function displayWeather(weather) {
+            document.getElementById('temperature').textContent = `${weather.temperature}°C`;
+            document.getElementById('feelsLike').textContent = `${weather.feels_like}°C`;
+            document.getElementById('description').textContent = weather.description;
+            document.getElementById('humidity').textContent = `${weather.humidity}%`;
+            document.getElementById('windSpeed').textContent = `${weather.wind_speed} km/h`;
+            document.getElementById('pressure').textContent = `${weather.pressure} hPa`;
+            document.getElementById('visibility').textContent = `${weather.visibility} km`;
+            document.getElementById('clouds').textContent = `${weather.clouds}%`;
+            document.getElementById('weatherIcon').textContent = weatherIcons[weather.icon] || '🌤️';
+        }
+
+        function displayIrrigationAdvisory(advisory) {
+            const statusEl = document.getElementById('irrigationStatus');
+            const statusTextEl = document.getElementById('irrigationStatusText');
+            const recommendationEl = document.getElementById('irrigationRecommendation');
+            const reasonsEl = document.getElementById('irrigationReasons');
+            const dataEl = document.getElementById('irrigationData');
+
+            // Set status
+            statusTextEl.textContent = advisory.status;
+            statusEl.className = 'advisory-status';
+            
+            if (advisory.status.includes('Not Required')) {
+                statusEl.classList.add('not-recommended');
+            } else if (advisory.status.includes('Reduce')) {
+                statusEl.classList.add('reduce');
+            } else if (advisory.status.includes('Increase')) {
+                statusEl.classList.add('increase');
+            } else {
+                statusEl.classList.add('recommended');
+            }
+
+            // Set recommendation
+            recommendationEl.textContent = advisory.recommendation;
+
+            // Set reasons
+            reasonsEl.innerHTML = '';
+            advisory.reasons.forEach(reason => {
+                const li = document.createElement('li');
+                li.textContent = reason;
+                reasonsEl.appendChild(li);
+            });
+
+            // Set data
+            dataEl.innerHTML = `
+                <div class="advisory-data-item">
+                    <span class="advisory-data-label">Rainfall Today</span>
+                    <span class="advisory-data-value">${advisory.data.rain_today} mm</span>
+                </div>
+                <div class="advisory-data-item">
+                    <span class="advisory-data-label">Rain Forecast 24h</span>
+                    <span class="advisory-data-value">${advisory.data.rain_forecast_24h} mm</span>
+                </div>
+                <div class="advisory-data-item">
+                    <span class="advisory-data-label">Humidity</span>
+                    <span class="advisory-data-value">${advisory.data.humidity}%</span>
+                </div>
+                <div class="advisory-data-item">
+                    <span class="advisory-data-label">Temperature</span>
+                    <span class="advisory-data-value">${advisory.data.temperature}°C</span>
+                </div>
+            `;
+        }
+
+        function displaySprayAdvisory(advisory) {
+            const statusEl = document.getElementById('sprayStatus');
+            const statusTextEl = document.getElementById('sprayStatusText');
+            const recommendationEl = document.getElementById('sprayRecommendation');
+            const reasonsEl = document.getElementById('sprayReasons');
+            const optimalTimeEl = document.getElementById('optimalTimeText');
+            const dataEl = document.getElementById('sprayData');
+
+            // Set status
+            statusTextEl.textContent = advisory.status;
+            statusEl.className = 'advisory-status';
+            
+            if (advisory.status.includes('Not Recommended')) {
+                statusEl.classList.add('not-recommended');
+            } else if (advisory.status.includes('Caution') || advisory.status.includes('Delay')) {
+                statusEl.classList.add('caution');
+            } else {
+                statusEl.classList.add('recommended');
+            }
+
+            // Set recommendation
+            recommendationEl.textContent = advisory.recommendation;
+
+            // Set reasons
+            reasonsEl.innerHTML = '';
+            advisory.reasons.forEach(reason => {
+                const li = document.createElement('li');
+                li.textContent = reason;
+                reasonsEl.appendChild(li);
+            });
+
+            // Set optimal time
+            optimalTimeEl.textContent = advisory.optimal_time;
+
+            // Set data
+            dataEl.innerHTML = `
+                <div class="advisory-data-item">
+                    <span class="advisory-data-label">Wind Speed</span>
+                    <span class="advisory-data-value">${advisory.data.wind_speed} km/h</span>
+                </div>
+                <div class="advisory-data-item">
+                    <span class="advisory-data-label">Humidity</span>
+                    <span class="advisory-data-value">${advisory.data.humidity}%</span>
+                </div>
+                <div class="advisory-data-item">
+                    <span class="advisory-data-label">Rain Forecast 12h</span>
+                    <span class="advisory-data-value">${advisory.data.rain_forecast_12h ? 'Yes ⚠️' : 'No ✓'}</span>
+                </div>
+                <div class="advisory-data-item">
+                    <span class="advisory-data-label">Current Time</span>
+                    <span class="advisory-data-value">${advisory.data.current_time_optimal ? 'Optimal ✓' : 'Not Optimal'}</span>
+                </div>
+            `;
+        }
+
+        function showError(message) {
+            document.getElementById('errorMessage').querySelector('p').textContent = message;
+            hideElement('loadingMessage');
+            showElement('errorMessage');
+        }
+
+        function showElement(id) {
+            document.getElementById(id).classList.remove('hidden');
+        }
+
+        function hideElement(id) {
+            document.getElementById(id).classList.add('hidden');
+        }
+    </script>
+</body>
+</html>

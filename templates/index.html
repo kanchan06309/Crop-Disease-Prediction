@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SustainaCrop - AI Crop Prediction</title>
+  <link rel="stylesheet" href="../static/style.css" />
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.botpress.cloud/webchat/v3.5/inject.js" defer></script>
+  <script src="https://files.bpcontent.cloud/2025/12/16/16/20251216165247-2LMY11R7.js" defer></script>
+</head>
+
+<body>
+  <div id="app">
+    <header class="header">
+      <div class="logo-container">
+        <!-- Simple SVG Logo -->
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M20 0C8.954 0 0 8.954 0 20s8.954 20 20 20 20-8.954 20-20S31.046 0 20 0zm0 36c-8.837 0-16-7.163-16-16S11.163 4 20 4s16 7.163 16 16-7.163 16-16 16z"
+            fill="#10B981" />
+          <path d="M20 10c-5.523 0-10 4.477-10 10h20c0-5.523-4.477-10-10-10z" fill="#10B981" />
+          <path d="M20 30c2.761 0 5-2.239 5-5H15c0 2.761 2.239 5 5 5z" fill="#059669" />
+        </svg>
+        <span class="logo-text">AgroAI</span>
+      </div>
+
+      <nav class="main-nav">
+        <a href="{{ url_for('home') }}" class="nav-btn">Home</a>
+        <a href="{{ url_for('explore') }}" class="nav-btn">Explore</a>
+        <a href="{{ url_for('detect') }}" class="nav-btn">Disease Detection</a>
+        <a href="{{ url_for('contact') }}" class="nav-btn">Contact</a>
+        <a href="{{ url_for('help') }}" class="nav-btn">Help/FAQ</a>
+        <a href="{{ url_for('dashboard') }}" class="nav-btn">Dashboard</a>
+        <a href="{{ url_for('homehi') }}" class="nav-btn">हिंदी</a>
+      </nav>
+    </header>
+
+    <main class="hero">
+      <div class="hero-content">
+        <h1>Future of Agriculture with <span class="gradient-text">AI Precision</span></h1>
+        <p>Detect diseases, optimize treatments, and maximize yield with our cutting-edge AI technology.</p>
+        <div class="cta-group">
+          <button class="primary-btn"
+            onclick="document.getElementById('about').scrollIntoView({behavior: 'smooth'})">Get Started</button>
+          <button class="secondary-btn"
+            onclick="document.getElementById('about').scrollIntoView({behavior: 'smooth'})">Learn More</button>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="visual-card">
+          <div class="scan-line"></div>
+          <div class="data-overlay">
+            <span>Analysis: 98%</span>
+            <span>Health: Good</span>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <section id="about" class="about-section">
+      <div class="section-container">
+        <h2>Empowering <span class="gradient-text">Farmers</span></h2>
+        <div class="about-grid">
+          <div class="about-text">
+            <p>Agriculture is the backbone of our civilization. For centuries, farmers have worked tirelessly to feed
+              the world. Today, we face new challenges: climate change, evolving pests, and the need for sustainable
+              practices.</p>
+            <p>SustainaCrop bridges the gap between traditional wisdom and modern technology. By leveraging Artificial
+              Intelligence, we help farmers:</p>
+            <ul class="feature-list">
+              <li>🌱 Detect plant diseases early to prevent crop loss.</li>
+              <li>💧 Optimize resource usage for sustainable farming.</li>
+              <li>📈 Increase yield with data-driven insights.</li>
+            </ul>
+          </div>
+          <div class="about-visuals two-cards">
+            <a href="{{ url_for('smart_farming') }}" class="visual-card-small card-smart interactive">
+              <div class="icon-lg">🌾</div>
+              <span>Smart Farming</span>
+              <span class="click-hint">(Click to View)</span>
+            </a>
+            <a href="{{ url_for('global_impact') }}" class="visual-card-small card-global interactive">
+              <div class="icon-lg">🌍</div>
+              <span>Global Impact</span>
+              <span class="click-hint">(Click to View)</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script type="module" src="/main.js"></script>
+</body>
+
+</html>

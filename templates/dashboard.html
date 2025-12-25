@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgroAI Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        /* --- UPDATED HEADER CSS --- */
+        .header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 20px 30px; /* Adjusted padding */
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            
+            /* Flex properties for layout */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .header-content h1 {
+            color: white;
+            font-size: 2.5em;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .header-content p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1em;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 0.95em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Style for Home Button */
+        .btn-home {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-home:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+        }
+
+        /* Style for Report Button */
+        .btn-report {
+            background: linear-gradient(135deg, #ff9966 0%, #ff5e62 100%);
+            color: white;
+            border: none;
+            box-shadow: 0 4px 15px rgba(255, 94, 98, 0.3);
+        }
+
+        .btn-report:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 94, 98, 0.5);
+        }
+
+        /* --- END UPDATED HEADER CSS --- */
+        
+        .controls-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        
+        .dropdown-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .dropdown-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .dropdown-group label {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #2c5364;
+            font-size: 1em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .dropdown-group select {
+            padding: 15px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 1.05em;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #333;
+        }
+        
+        .dropdown-group select:hover {
+            border-color: #2c5364;
+        }
+        
+        .dropdown-group select:focus {
+            outline: none;
+            border-color: #2c5364;
+            box-shadow: 0 0 0 4px rgba(44, 83, 100, 0.1);
+        }
+        
+        .search-btn-container {
+            text-align: center;
+        }
+        
+        #searchBtn {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            border: none;
+            padding: 18px 60px;
+            font-size: 1.2em;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(17, 153, 142, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        #searchBtn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(17, 153, 142, 0.6);
+        }
+        
+        #searchBtn:active {
+            transform: translateY(-1px);
+        }
+        
+        .results-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        
+        .results-section h2 {
+            color: #2c5364;
+            margin-bottom: 25px;
+            font-size: 2em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .result-count {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+        
+        #result {
+            min-height: 150px;
+        }
+        
+        .result-card {
+            background: white;
+            border: 2px solid #e8f5f3;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .result-card:hover {
+            border-color: #11998e;
+            box-shadow: 0 8px 30px rgba(17, 153, 142, 0.2);
+            transform: translateY(-3px);
+        }
+        
+        .result-card h3 {
+            color: #11998e;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+        
+        .result-card .info-row {
+            display: grid;
+            grid-template-columns: 150px 1fr;
+            gap: 10px;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .result-card .info-row:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .result-card .info-label {
+            font-weight: 600;
+            color: #555;
+        }
+        
+        .result-card .info-value {
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .priority-badge {
+            display: inline-block;
+            padding: 6px 15px;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+        
+        .no-data {
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
+            font-size: 1.2em;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 60px 20px;
+            color: #11998e;
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+        
+        .error {
+            background: #fee;
+            border: 2px solid #fcc;
+            color: #c33;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-content">
+                <h1>🌾 AgroAI Dashboard</h1>
+                <p>Madhya Pradesh Agricultural Priority Regions & Crop Management System</p>
+            </div>
+            
+            <div class="header-actions">
+                <button class="nav-btn btn-home" onclick="window.location.href='/'">
+                    🏠 Back to Home
+                </button>
+                
+                <button class="nav-btn btn-report" onclick="window.location.href='/weather'">
+                     Report
+                </button>
+            </div>
+        </div>
+        
+        <div class="controls-section">
+            <div class="dropdown-container">
+                <div class="dropdown-group">
+                    <label for="dropdown1">📍 Select State</label>
+                    <select id="dropdown1">
+                        <option value="">All States</option>
+                    </select>
+                </div>
+                
+                <div class="dropdown-group">
+                    <label for="dropdown2">🗺️ Priority Region</label>
+                    <select id="dropdown2">
+                        <option value="">All Regions</option>
+                    </select>
+                </div>
+                
+                <div class="dropdown-group">
+                    <label for="dropdown3">🏛️ District</label>
+                    <select id="dropdown3">
+                        <option value="">All Districts</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="search-btn-container">
+                <button id="searchBtn">🔍 Search Data</button>
+            </div>
+        </div>
+        
+        <div class="results-section">
+            <h2>📊 Results <span class="result-count" id="resultCount" style="display:none;"></span></h2>
+            <div id="result">
+                <div class="no-data">👆 Select filters and click search to view agricultural data</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', async () => {
+            try {
+                console.log('Loading dropdown options...');
+                const resp = await fetch('/api/options');
+                const data = await resp.json();
+                
+                console.log('Options loaded:', data);
+
+                if (data.error) {
+                    document.getElementById('result').innerHTML = 
+                        `<div class="error"><strong>Error:</strong> ${data.error}</div>`;
+                    return;
+                }
+
+                fillSelect('dropdown1', data.dropdown1 || []);
+                fillSelect('dropdown2', data.dropdown2 || []);
+                fillSelect('dropdown3', data.dropdown3 || []);
+                
+                console.log('✓ Dropdowns populated successfully');
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('result').innerHTML = 
+                    `<div class="error"><strong>Error:</strong> ${error.message}</div>`;
+            }
+        });
+
+        function fillSelect(id, items) {
+            const sel = document.getElementById(id);
+            const defaultOption = sel.options[0].text;
+            sel.innerHTML = `<option value="">${defaultOption}</option>`;
+            
+            items.forEach(item => {
+                const opt = document.createElement('option');
+                opt.value = item.value;
+                opt.textContent = item.label;
+                sel.appendChild(opt);
+            });
+            
+            console.log(`${id}: ${items.length} options loaded`);
+        }
+
+        document.getElementById('searchBtn').addEventListener('click', async () => {
+            const d1 = document.getElementById('dropdown1').value;
+            const d2 = document.getElementById('dropdown2').value;
+            const d3 = document.getElementById('dropdown3').value;
+
+            console.log('Searching:', {state: d1, region: d2, district: d3});
+
+            document.getElementById('result').innerHTML = 
+                '<div class="loading">⏳ Searching data...</div>';
+            document.getElementById('resultCount').style.display = 'none';
+
+            try {
+                const resp = await fetch('/api/search', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ value1: d1, value2: d2, value3: d3 })
+                });
+
+                const data = await resp.json();
+                console.log('Results:', data);
+                renderResult(data);
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('result').innerHTML = 
+                    `<div class="error">Error: ${error.message}</div>`;
+            }
+        });
+
+        function renderResult(data) {
+            const resultDiv = document.getElementById('result');
+            const countBadge = document.getElementById('resultCount');
+            
+            if (!data || !data.items || data.items.length === 0) {
+                resultDiv.innerHTML = '<div class="no-data">❌ No data found for this combination. Try different filters.</div>';
+                countBadge.style.display = 'none';
+                return;
+            }
+
+            countBadge.textContent = `${data.count} Results`;
+            countBadge.style.display = 'inline-block';
+
+            let html = '';
+            data.items.forEach(row => {
+                html += `
+                    <div class="result-card">
+                        <h3>${row.district} - ${row.target_crops}</h3>
+                        <div class="info-row">
+                            <span class="info-label">State:</span>
+                            <span class="info-value">${row.state}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Priority Region:</span>
+                            <span class="info-value">${row.priority_region}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Priority Level:</span>
+                            <span class="info-value">${row.priority_level}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Target Crops:</span>
+                            <span class="info-value">${row.target_crops}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Main Problem:</span>
+                            <span class="info-value">${row.main_problem}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Notes:</span>
+                            <span class="info-value">${row.notes}</span>
+                        </div>
+                        <span class="priority-badge">${row.priority_level}</span>
+                    </div>
+                `;
+            });
+            resultDiv.innerHTML = html;
+        }
+    </script>
+</body>
+</html>

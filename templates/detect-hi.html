@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Disease Detection</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --color-bg: #0f172a;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--color-bg);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 100%;
+            padding: 40px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 0.9em;
+        }
+
+        .upload-area {
+            border: 3px dashed #667eea;
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #f8f9ff;
+        }
+
+        .upload-area:hover {
+            border-color: #764ba2;
+            background: #f0f2ff;
+        }
+
+        .upload-area.dragover {
+            border-color: #764ba2;
+            background: #e8ebff;
+            transform: scale(1.02);
+        }
+
+        .upload-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .preview-container {
+            margin-top: 20px;
+            display: none;
+        }
+
+        .preview-image {
+            width: 100%;
+            max-height: 300px;
+            object-fit: contain;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .btn-predict {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .btn-predict:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-predict:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-reset {
+            background: #f0f2f5;
+            color: #333;
+        }
+
+        .btn-reset:hover {
+            background: #e4e6eb;
+        }
+
+        .result-container {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            display: none;
+        }
+
+        .result-success {
+            background: #d4edda;
+            border: 2px solid #28a745;
+        }
+
+        .result-error {
+            background: #f8d7da;
+            border: 2px solid #dc3545;
+        }
+
+        .result-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .confidence {
+            font-size: 1.5em;
+            color: #28a745;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .top-predictions {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #ccc;
+        }
+
+        .prediction-item {
+            padding: 8px;
+            margin: 5px 0;
+            background: white;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .loading {
+            text-align: center;
+            color: #667eea;
+            font-weight: bold;
+            display: none;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .back-home {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            text-decoration: none;
+            background: #22c55e;
+            color: white;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 0.9em;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .back-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+        }
+    </style>
+</head>
+
+<body>
+    <a href="{{ url_for('homehi') }}" class="back-home">मुख्य पृष्ठ पर जाएं</a>
+    <div class="container">
+        <h1>🌾 फसल रोग का पता लगाना</h1>
+        <p class="subtitle">अपनी फसल की तस्वीर अपलोड करें ताकि रोगों का पता लगाया जा सके</p>
+
+        <div class="upload-area" id="uploadArea">
+            <div class="upload-icon">📷</div>
+            <p><strong>अपलोड करने के लिए क्लिक करें</strong> या ड्रैग एंड ड्रॉप करें</p>
+            <p style="font-size: 0.9em; color: #999; margin-top: 10px;">
+                समर्थित: JPG, PNG, JPEG
+            </p>
+            <input type="file" id="fileInput" accept="image/*">
+        </div>
+
+        <div class="preview-container" id="previewContainer">
+            <img id="previewImage" class="preview-image" alt="Preview">
+            <button class="btn btn-predict" id="predictBtn">
+                🔍 रोग का पता लगाना
+            </button>
+            <button class="btn btn-reset" id="resetBtn">
+                ↻ एक और तस्वीर अपलोड करें
+            </button>
+        </div>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>तस्वीर का विश्लेषण कर रहे हैं...</p>
+        </div>
+
+        <div class="result-container" id="resultContainer"></div>
+    </div>
+
+    <script>
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const previewContainer = document.getElementById('previewContainer');
+        const previewImage = document.getElementById('previewImage');
+        const predictBtn = document.getElementById('predictBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const loading = document.getElementById('loading');
+        const resultContainer = document.getElementById('resultContainer');
+
+        let selectedFile = null;
+
+        // Upload area click
+        uploadArea.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        // File selection
+        fileInput.addEventListener('change', (e) => {
+            handleFile(e.target.files[0]);
+        });
+
+        // Drag and drop
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            handleFile(e.dataTransfer.files[0]);
+        });
+
+        function handleFile(file) {
+            if (!file || !file.type.startsWith('image/')) {
+                alert('Please upload a valid image file');
+                return;
+            }
+
+            selectedFile = file;
+            const reader = new FileReader();
+
+            reader.onload = (e) => {
+                previewImage.src = e.target.result;
+                uploadArea.style.display = 'none';
+                previewContainer.style.display = 'block';
+                resultContainer.style.display = 'none';
+            };
+
+            reader.readAsDataURL(file);
+        }
+
+        // Predict button
+        predictBtn.addEventListener('click', async () => {
+            if (!selectedFile) return;
+
+            const formData = new FormData();
+            formData.append('image', selectedFile);
+
+            loading.style.display = 'block';
+            resultContainer.style.display = 'none';
+            predictBtn.disabled = true;
+
+            try {
+                const response = await fetch('/api/predict', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+                loading.style.display = 'none';
+                predictBtn.disabled = false;
+
+                if (data.success) {
+                    showResult(data);
+                } else {
+                    showError(data.error || 'Prediction failed');
+                }
+            } catch (error) {
+                loading.style.display = 'none';
+                predictBtn.disabled = false;
+                showError('Network error: ' + error.message);
+            }
+        });
+
+        // Reset button
+        resetBtn.addEventListener('click', () => {
+            selectedFile = null;
+            fileInput.value = '';
+            uploadArea.style.display = 'block';
+            previewContainer.style.display = 'none';
+            resultContainer.style.display = 'none';
+        });
+
+        function showResult(data) {
+            const confidencePercent = (data.confidence * 100).toFixed(2);
+
+            let html = `
+                <div class="result-title">Detection Result:</div>
+                <div style="font-size: 1.3em; color: #333; margin: 10px 0;">
+                    <strong>${data.prediction}</strong>
+                </div>
+                <div class="confidence">Confidence: ${confidencePercent}%</div>
+            `;
+
+            if (data.top_predictions && data.top_predictions.length > 0) {
+                html += '<div class="top-predictions"><strong>Top Predictions:</strong>';
+                data.top_predictions.forEach((pred, idx) => {
+                    const conf = (pred.confidence * 100).toFixed(2);
+                    html += `
+                        <div class="prediction-item">
+                            <span>${idx + 1}. ${pred.class}</span>
+                            <span><strong>${conf}%</strong></span>
+                        </div>
+                    `;
+                });
+                html += '</div>';
+            }
+
+            resultContainer.className = 'result-container result-success';
+            resultContainer.innerHTML = html;
+            resultContainer.style.display = 'block';
+        }
+
+        function showError(message) {
+            resultContainer.className = 'result-container result-error';
+            resultContainer.innerHTML = `
+                <div class="result-title">Error:</div>
+                <p>${message}</p>
+            `;
+            resultContainer.style.display = 'block';
+        }
+    </script>
+</body>
+
+</html>

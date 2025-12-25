@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Farming - SustainaCrop</title>
+    <link rel="stylesheet" href="../static/style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div id="app">
+        <header class="header">
+            <div class="logo-container">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M20 0C8.954 0 0 8.954 0 20s8.954 20 20 20 20-8.954 20-20S31.046 0 20 0zm0 36c-8.837 0-16-7.163-16-16S11.163 4 20 4s16 7.163 16 16-7.163 16-16 16z"
+                        fill="#10B981" />
+                    <path d="M20 10c-5.523 0-10 4.477-10 10h20c0-5.523-4.477-10-10-10z" fill="#10B981" />
+                    <path d="M20 30c2.761 0 5-2.239 5-5H15c0 2.761 2.239 5 5 5z" fill="#059669" />
+                </svg>
+                <span class="logo-text">AgroAI</span>
+            </div>
+            <nav class="main-nav">
+                <a href="{{ url_for('home') }}" class="nav-btn">Home</a>
+                <a href="{{ url_for('explore') }}" class="nav-btn">Explore</a>
+                <a href="{{ url_for('detect') }}" class="nav-btn">Disease Detection</a>
+                <a href="{{ url_for('contact') }}" class="nav-btn">Contact</a>
+                <a href="{{ url_for('help') }}" class="nav-btn">Help/FAQ</a>
+                <a href="{{ url_for('dashboard') }}" class="nav-btn">Dashboard</a>
+                <a href="{{ url_for('homehi') }}" class="nav-btn">हिंदी</a>
+            </nav>
+        </header>
+
+        <main class="page-container">
+            <h1>Smart <span class="gradient-text">Farming</span></h1>
+            <p class="subtitle">Revolutionizing agriculture with technology and data.</p>
+
+            <div class="section-container" style="max-width: 800px; margin: 0 auto; color: #cbd5e1; line-height: 1.8;">
+                <img src="https://images.pexels.com/photos/974314/pexels-photo-974314.jpeg?_gl=1*sb7ntx*_ga*NDQ4MjUxMTYyLjE3MzE2NzExODE.*_ga_8JE65Q40S6*czE3NjU2Mjk0MjgkbzUkZzEkdDE3NjU2Mjk0NDIkajQ2JGwwJGgw"
+                    alt="Smart Farming"
+                    style="width: 100%; border-radius: 20px; margin-bottom: 2rem; border: 1px solid rgba(255,255,255,0.1);">
+
+                <h3 style="color: var(--color-primary); font-size: 1.5rem; margin-bottom: 1rem;">The IoT Revolution</h3>
+                <p style="margin-bottom: 2rem;">
+                    Smart farming utilizes Internet of Things (IoT) sensors, drones, and automated systems to monitor
+                    crop health,
+                    soil moisture, and weather conditions in real-time. By collecting precise data points from every
+                    corner of the field,
+                    farmers can understand exact requirements for water, fertilizer, and pesticides.
+                </p>
+
+                <h3 style="color: var(--color-primary); font-size: 1.5rem; margin-bottom: 1rem;">Precision Agriculture
+                </h3>
+                <p style="margin-bottom: 2rem;">
+                    Instead of treating entire fields uniformly, precision agriculture allows for targeted intervention.
+                    If a small patch of land is nutrient-deficient, only that specific area receives treatment.
+                    This drastically reduces chemical usage, lowers costs, and minimizes environmental runoff.
+                </p>
+
+                <h3 style="color: var(--color-primary); font-size: 1.5rem; margin-bottom: 1rem;">Automated Systems</h3>
+                <p>
+                    From autonomous tractors to robotic harvesters, automation is addressing labor shortages and
+                    increasing efficiency.
+                    Our AI-driven prediction models integrate seamlessly with these systems to ensure interventions
+                    happen exactly when needed,
+                    optimizing yield and quality.
+                </p>
+            </div>
+        </main>
+    </div>
+    <script type="module" src="/main.js"></script>
+</body>
+
+</html>

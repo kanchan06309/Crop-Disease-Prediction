@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="hi">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SustainaCrop - एआई फसल भविष्यवाणी</title>
+  <link rel="stylesheet" href="../static/style.css" />
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.botpress.cloud/webchat/v3.5/inject.js" defer></script>
+<script src="https://files.bpcontent.cloud/2025/12/16/16/20251216165247-2LMY11R7.js" defer></script>
+</head>
+
+<body>
+  <div id="app">
+    <header class="header">
+      <div class="logo-container">
+        <!-- Simple SVG Logo -->
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M20 0C8.954 0 0 8.954 0 20s8.954 20 20 20 20-8.954 20-20S31.046 0 20 0zm0 36c-8.837 0-16-7.163-16-16S11.163 4 20 4s16 7.163 16 16-7.163 16-16 16z"
+            fill="#10B981" />
+          <path d="M20 10c-5.523 0-10 4.477-10 10h20c0-5.523-4.477-10-10-10z" fill="#10B981" />
+          <path d="M20 30c2.761 0 5-2.239 5-5H15c0 2.761 2.239 5 5 5z" fill="#059669" />
+        </svg>
+        <span class="logo-text">AgroAI</span>
+      </div>
+
+      <nav class="main-nav">
+        <a href="{{ url_for('homehi') }}" class="nav-btn active">होम</a>
+        <a href="{{ url_for('explorehi') }}" class="nav-btn">एक्सप्लोर करें</a>
+        <a href="{{ url_for('detecthi') }}" class="nav-btn">रोग का पता लगाएं</a>
+        <a href="{{ url_for('contacthi') }}" class="nav-btn">संपर्क करें</a>
+        <a href="{{ url_for('helphi') }}" class="nav-btn">सहायता/FAQ</a>
+         <a href="{{ url_for('dashboard') }}" class="nav-btn">डैशबोर्ड</a>
+        <a href="{{ url_for('home') }}" class="nav-btn">English</a>
+      </nav>
+    </header>
+
+    <main class="hero">
+      <div class="hero-content">
+        <h1>कृषि का भविष्य <span class="gradient-text">एआई प्रेसिजन</span> के साथ</h1>
+        <p>हमारी अत्याधुनिक एआई तकनीक के साथ रोगों का पता लगाएं, उपचार का अनुकूलन करें और उपज को अधिकतम करें।</p>
+        <div class="cta-group">
+          <button class="primary-btn"
+            onclick="document.getElementById('about').scrollIntoView({behavior: 'smooth'})">शुरू करें</button>
+          <button class="secondary-btn"
+            onclick="document.getElementById('about').scrollIntoView({behavior: 'smooth'})">और जानें</button>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="visual-card">
+          <div class="scan-line"></div>
+          <div class="data-overlay">
+            <span>विश्लेषण: 98%</span>
+            <span>स्वास्थ्य: अच्छा</span>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <section id="about" class="about-section">
+      <div class="section-container">
+        <h2>किसानों को <span class="gradient-text">सशक्त बनाना</span></h2>
+        <div class="about-grid">
+          <div class="about-text">
+            <p>कृषि हमारी सभ्यता की रीढ़ है। सदियों से, किसान दुनिया का पेट भरने के लिए अथक प्रयास कर रहे हैं। आज, हम नई
+              चुनौतियों का सामना कर रहे हैं: जलवायु परिवर्तन, विकसित होते कीट, और टिकाऊ प्रथाओं की आवश्यकता।</p>
+            <p>SustainaCrop पारंपरिक ज्ञान और आधुनिक तकनीक के बीच की खाई को पाटता है। आर्टिफिशियल इंटेलिजेंस का लाभ
+              उठाकर, हम किसानों की मदद करते हैं:</p>
+            <ul class="feature-list">
+              <li>🌱 फसल के नुकसान को रोकने के लिए पौधों के रोगों का जल्दी पता लगाएं।</li>
+              <li>💧 टिकाऊ खेती के लिए संसाधनों के उपयोग का अनुकूलन करें।</li>
+              <li>📈 डेटा-संचालित अंतर्दृष्टि के साथ उपज बढ़ाएं।</li>
+            </ul>
+          </div>
+          <div class="about-visuals two-cards">
+            <a href="{{ url_for('smart_farming_hi') }}" class="visual-card-small card-smart interactive">
+              <div class="icon-lg">🌾</div>
+              <span>स्मार्ट खेती</span>
+              <span class="click-hint">(देखें के लिए क्लिक करें)</span>
+            </a>
+            <a href="{{ url_for('global_impact_hi') }}" class="visual-card-small card-global interactive">
+              <div class="icon-lg">🌍</div>
+              <span>वैश्विक प्रभाव</span>
+              <span class="click-hint">(देखें के लिए क्लिक करें)</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script type="module" src="/main.js"></script>
+  <script type="module" src="/chatbot.js"></script>
+</body>
+
+</html>

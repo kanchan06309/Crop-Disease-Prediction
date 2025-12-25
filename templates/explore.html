@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Explore | SustainaCrop</title>
+    <link rel="stylesheet" href="../static/exstyle.css" />
+    <script src="../static/explore.js" defer></script>
+</head>
+
+<body>
+    
+    <header class="sc-header">
+        <div class="sc-header-inner">
+            <div class="sc-logo">
+                <div class="sc-logo-icon">◎</div>
+                <span class="sc-logo-text">AgroAI</span>
+            </div>
+            <a href="/" class="home-btn">Back to Home</a>
+        </div>
+    </header>
+
+    <main class="sc-main">
+        <section class="explore-hero">
+            <div class="explore-hero-left">
+                <p class="eyebrow">Explore Resources</p>
+                <h1>
+                    Discover Smart <span class="accent">Crop Insights</span>
+                </h1>
+                <p class="subtitle">
+                    Search diseases, find treatments, and learn modern AI-driven
+                    farming practices tailored for your fields.
+                </p>
+
+                <div class="search-wrapper">
+                    <div class="input-group">
+                        <input 
+                            type="text" 
+                            id="search-input" 
+                            placeholder="Type to search (e.g., 'Rice', 'Blight')..."
+                            autocomplete="off"
+                        />
+                        <select id="filter-crop">
+                            <option value="">All Crops</option>
+                            </select>
+                    </div>
+                    <p id="results-count" style="margin-top: 10px; font-size: 0.9rem; opacity: 0.8;">
+                        Waiting for input...
+                    </p>
+                </div>
+            </div>
+
+            <div class="explore-hero-right">
+                <div class="scan-card">
+                    <div class="scan-line"></div>
+                    <div class="scan-info">
+                        <span>Database: Live</span>
+                        <span>AI: Active</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="explore-grid-section">
+            <h2 class="grid-title">Search Results</h2>
+
+            <div id="loading-spinner" style="display: none; text-align: center; padding: 20px;">
+                <div class="spinner">Loading...</div>
+            </div>
+
+            <div id="error-message" style="display: none; color: #ff6b6b; text-align: center; margin-bottom: 20px;"></div>
+
+            <div id="disease-container" class="explore-grid">
+                </div>
+        </section>
+    </main>
+</body>
+</html>
