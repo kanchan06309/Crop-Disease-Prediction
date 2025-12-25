@@ -588,7 +588,7 @@ def search():
 DB_CONFIG = {
     'host': os.getenv('DB_HOST', 'localhost'),
     'user': os.getenv('DB_USER', 'root'),
-    'password': os.getenv('DB_PASSWORD', 'kanmysql'),
+    'password': os.getenv('DB_PASSWORD', 'Enter your password here'),
     'database': os.getenv('DB_NAME', 'crop_disease_db')
 }
 
