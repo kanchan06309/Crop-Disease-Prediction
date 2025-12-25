@@ -48,3 +48,46 @@ Integrated weather support:
 - Real-time weather report
 - Temperature, humidity, rainfall insights
 - Helps farmers make better cultivation decisions
+
+Note - The machine Learning model is not trained for all crop diseases. You can find the dataset used for this in the datasets folder.
+
+MySql Database Schema: Used to store data of
+- 6 sample crops with images from Unsplash
+- 8 treatment methods with detailed information
+- 12 diseases linking crops to treatments
+
+Database name - crop_disease_db
+
+Tables - disease, treatment, and crops
+
+-- Table 1: crops
+CREATE TABLE crops (
+    crop_id INT PRIMARY KEY AUTO_INCREMENT,
+    crop_name VARCHAR(100) NOT NULL,
+    crop_image_url VARCHAR(255),
+    description TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Table 2: treatment
+CREATE TABLE treatment (
+    treatment_id INT PRIMARY KEY AUTO_INCREMENT,
+    treatment_name VARCHAR(150) NOT NULL,
+    dosage VARCHAR(100),
+    application_method TEXT,
+    precautions TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Table 3: disease (with foreign keys to crops and treatment)
+CREATE TABLE disease (
+    disease_id INT PRIMARY KEY AUTO_INCREMENT,
+    disease_name VARCHAR(150) NOT NULL,
+    crop_id INT NOT NULL,
+    treatment_id INT NOT NULL,
+    symptoms TEXT,
+    prevention TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (crop_id) REFERENCES crops(crop_id) ON DELETE CASCADE,
+    FOREIGN KEY (treatment_id) REFERENCES treatment(treatment_id) ON DELETE CASCADE
+);

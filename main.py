@@ -18,7 +18,7 @@ app = Flask(__name__)
 CORS(app)  # Enable CORS for frontend requests
 
 # Your OpenWeatherMap API key
-API_KEY = 'af85e5bb529190041fc8cdfc62960711'
+API_KEY = 'OPENWEATHER_API_KEY'  # Replace with your actual API key
 WEATHER_URL = 'https://api.openweathermap.org/data/2.5/weather'
 FORECAST_URL = 'https://api.openweathermap.org/data/2.5/forecast'
 
